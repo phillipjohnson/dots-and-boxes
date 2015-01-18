@@ -1,5 +1,5 @@
-import scala.util.Random
-
+package game
+import strategy.RandomPlay
 /**
  * Author: Phillip Johnson
  * Date: 1/14/15
@@ -12,8 +12,8 @@ object DotsAndBoxesApp extends App {
     state.availableMoves.isEmpty
   }
 
-  val player1 = new Player()
-  val player2 = new Player()
+  val player1 = new Player(new RandomPlay())
+  val player2 = new Player(new RandomPlay())
 
   var currentPlayer = player1
 
@@ -22,9 +22,11 @@ object DotsAndBoxesApp extends App {
     board.play(currentPlayer.pickPlay(board))
     val newSquares = board.completedSquares
     if(newSquares == initialSquares) {
-      if(currentPlayer == player1) player2 else player1
+      //We only change players if no box was completed
+      if(currentPlayer == player1) currentPlayer = player2 else currentPlayer = player1
     } else {
-      currentPlayer.completeBox()
+      val score = newSquares - initialSquares
+      currentPlayer.completeBox(score)
     }
     board.print
   }

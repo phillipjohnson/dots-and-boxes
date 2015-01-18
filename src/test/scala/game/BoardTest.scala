@@ -1,3 +1,5 @@
+package game
+
 import org.scalatest.FunSuite
 /**
  * Author: Phillip Johnson
