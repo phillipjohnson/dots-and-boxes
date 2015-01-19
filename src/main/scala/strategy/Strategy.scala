@@ -1,10 +1,10 @@
 package strategy
-import game.Board
+import game.{GameState, Board}
 
 /**
  * Author: Phillip Johnson
  * Date: 1/18/15
  */
 trait Strategy {
-  def play(b:Board):(Int, Int)
+  def play(state:GameState):(Int, Int)
 }

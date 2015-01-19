@@ -1,6 +1,6 @@
 package strategy
 
-import game.Board
+import game.{GameState, Board}
 import scala.util.Random
 
 /**
@@ -9,7 +9,9 @@ import scala.util.Random
  */
 class RandomPlay extends Strategy {
 
-  def play(state:Board):(Int,Int) = {
+  def play(state:GameState):(Int,Int) = {
     Random.shuffle(state.availableMoves).head
   }
+
+  override def toString = "RANDO"
 }

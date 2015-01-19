@@ -4,12 +4,10 @@ package game
  * Author: Phillip Johnson
  * Date: 1/18/15
  */
-class Board(val size: Int) {
+class Board(val size: Int, val plays:List[(Int,Int)]) {
   require(size > 1, "Size of board must be greater than 1.")
 
   val area = size * size
-
-  private var plays:List[(Int,Int)] = List.empty
 
   val possibleMoves = List.concat(
     for {
@@ -42,12 +40,12 @@ class Board(val size: Int) {
     }
   }
 
-  def play(line:(Int, Int)) = {
+  def play(line:(Int, Int)):Board = {
     require(!plays.contains(line), "Illegal play: " + line + " already on board")
-    plays = plays.::(line)
+    new Board(size, plays.::(line))
   }
 
-  def print = {
+  def print() = {
     var out = ""
 
     def horizontal(start:Int, end:Int):String = {

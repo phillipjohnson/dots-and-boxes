@@ -11,7 +11,7 @@ class Player(val strategy:Strategy) {
 
   def completeBox(boxes:Int) = score += boxes
 
-  def pickPlay(state:Board):(Int,Int) = {
+  def pickPlay(state:GameState):(Int,Int) = {
     strategy.play(state)
   }
 }
