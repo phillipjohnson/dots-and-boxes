@@ -1,66 +1,48 @@
 package strategy
 
-import game.{GameState, DotsAndBoxesApp, Board}
-import scala.util.Random
+import game.GameState
 
 /**
  * Author: Phillip Johnson
  * Date: 1/18/15
  */
 class Minimax extends Strategy {
+
+  private val maxDepth = 3
+
   def play(state:GameState):(Int, Int) = {
     val moveScores = {
       for {
         move <- state.availableMoves
       } yield move -> minimax(state.makeMove(move))
     }
-    println(moveScores)
-    //println(minimax(state))
     val bestMove = moveScores.minBy(_._2)._1
-    val bestScore = moveScores.minBy(_._2)._2
-   // println("BEST " + bestScore + " :: "  + bestMove)
     bestMove
-    //Random.shuffle(state.availableMoves).head
   }
 
   private def minimax(state:GameState):Int = {
-    minimize(state, Integer.MIN_VALUE, Integer.MAX_VALUE)
+    minimize(state, maxDepth, Integer.MIN_VALUE, Integer.MAX_VALUE)
   }
 
-  private def minimize(state:GameState, alpha:Int, beta:Int):Int = {
-    if(state.isTerminal) {//println("min TERM " + state.hVal);
-      return state.hVal}
-    //println("Player " + state.currentPlayer + " is minimizing.")
+  private def minimize(state:GameState, depth:Int, alpha:Int, beta:Int):Int = {
+    if(state.isTerminal || depth == 0) return state.hVal
     var newBeta = beta
     state.availableMoves.foreach(move => {
       val newState = state.makeMove(move)
-//      if(newState.currentPlayer == state.currentPlayer) {
-//        //println("hit")
-//        minimize(newState, alpha, beta)
-//      } else {
-        newBeta = math.min(beta, maximize(newState, alpha, newBeta))
+        newBeta = math.min(beta, maximize(newState, depth - 1, alpha, newBeta))
         if (alpha >= newBeta) return alpha
-      //}
     })
-    //println("" + state.currentPlayer + " MIN A: " + alpha + " B: " + newBeta)
     newBeta
   }
 
-  private def maximize(state:GameState, alpha:Int, beta:Int):Int = {
-    if(state.isTerminal) {//println("max TERM " + state.hVal);
-      return state.hVal}
-    //println("Player " + state.currentPlayer + " is maximizing.")
+  private def maximize(state:GameState, depth:Int, alpha:Int, beta:Int):Int = {
+    if(state.isTerminal || depth == 0) return state.hVal
     var newAlpha = alpha
     for(move <- state.availableMoves) {
       val newState = state.makeMove(move)
-//      if(newState.currentPlayer == state.currentPlayer) {
-//        maximize(newState, alpha, beta)
-//      } else {
-        newAlpha = math.max(newAlpha, minimize(newState, newAlpha, beta))
+        newAlpha = math.max(newAlpha, minimize(newState, depth - 1, newAlpha, beta))
         if (newAlpha >= beta) return beta
-//      }
     }
-    //println("" + state.currentPlayer + " MAX A: " + newAlpha + " B: " + beta)
     newAlpha
   }
 
