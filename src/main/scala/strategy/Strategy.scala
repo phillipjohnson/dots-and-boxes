@@ -1,5 +1,5 @@
 package strategy
-import game.{GameState, Board}
+import game.GameState
 
 /**
  * Author: Phillip Johnson

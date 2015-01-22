@@ -6,7 +6,7 @@ import strategy.{Minimax, RandomPlay}
  */
 object DotsAndBoxesApp extends App {
 
-  val player1 = new Player(new Minimax(), 0, true)
-  val player2 = new Player(new RandomPlay(), 0, false)
-  new Tournament(100, player1, player2).play()
+  val strategy1 = new Minimax()
+  val strategy2 = new RandomPlay()
+  new Tournament(100, strategy1, strategy2).play()
 }

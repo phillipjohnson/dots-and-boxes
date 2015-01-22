@@ -8,7 +8,7 @@ import game.GameState
  */
 class Minimax extends Strategy {
 
-  private val maxDepth = 3
+  private val maxDepth = 5
 
   def play(state:GameState):(Int, Int) = {
     val moveScores = {
