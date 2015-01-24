@@ -1,6 +1,7 @@
 package game
 
 import strategy.Strategy
+import scala.annotation.tailrec
 
 /**
  * Author: Phillip Johnson
@@ -17,11 +18,11 @@ class Game(val strategy1:Strategy, val strategy2:Strategy) {
 
   def play:GameState = gameLoop(gameState)
 
+  @tailrec
   private def gameLoop(state:GameState):GameState = {
     if(state.isTerminal) return state
     val move = state.currentPlayer.pickPlay(state)
     val newState = state.makeMove(move)
-
     gameLoop(newState)
   }
 }

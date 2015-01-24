@@ -4,11 +4,11 @@ import game.GameState
 
 /**
  * Author: Phillip Johnson
- * Date: 1/18/15
+ * Date: 1/23/15
  */
-class Minimax extends Strategy {
+class MinimaxNaive extends Strategy {
 
-  private val maxDepth = 3
+  val maxDepth = 3
 
   def play(state:GameState):(Int, Int) = {
     val moveScores = {
@@ -21,30 +21,30 @@ class Minimax extends Strategy {
   }
 
   private def minimax(state:GameState):Int = {
-    minimize(state, maxDepth, Integer.MIN_VALUE, Integer.MAX_VALUE)
+    minimize(state, maxDepth)
   }
 
-  private def minimize(state:GameState, depth:Int, alpha:Int, beta:Int):Int = {
+  private def minimize(state:GameState, depth:Int):Int = {
     if(state.isTerminal || depth == 0) return state.hVal
-    var newBeta = beta
+    var bestResult = Integer.MAX_VALUE
     state.availableMoves.foreach(move => {
       val newState = state.makeMove(move)
-      newBeta = math.min(beta, maximize(newState, depth - 1, alpha, newBeta))
-      if (alpha >= newBeta) return alpha
+      val bestChildResult = maximize(newState, depth - 1)
+      bestResult = math.min(bestResult, bestChildResult)
     })
-    newBeta
+    bestResult
   }
 
-  private def maximize(state:GameState, depth:Int, alpha:Int, beta:Int):Int = {
+  private def maximize(state:GameState, depth:Int):Int = {
     if(state.isTerminal || depth == 0) return state.hVal
-    var newAlpha = alpha
+    var bestResult = Integer.MIN_VALUE
     state.availableMoves.foreach(move => {
       val newState = state.makeMove(move)
-      newAlpha = math.max(newAlpha, minimize(newState, depth - 1, newAlpha, beta))
-      if (newAlpha >= beta) return beta
+      val bestChildResult = minimize(newState, depth - 1)
+      bestResult = math.max(bestResult, bestChildResult)
     })
-    newAlpha
+    bestResult
   }
 
-  override def toString = "MINIMAX"
+  override def toString = "MINIMAX NAIVE"
 }
