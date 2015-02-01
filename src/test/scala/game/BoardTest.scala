@@ -36,4 +36,49 @@ class BoardTest extends FunSuite {
     board = board.play((6,7))
     assert(board.completedSquares == 4)
   }
+
+  test("Board from string calculates 2x2") {
+    val view = "+---+\n" +
+               "|   |\n" +
+               "+---+\n"
+    val b = Board(view)
+    assert(b.size == 2)
+    assert(view == b.toString)
+  }
+
+  test("Board from string calculates empty 2x2") {
+    val view = "+   +\n" +
+               "     \n" +
+               "+   +\n"
+    val b = Board(view)
+    assert(b.size == 2)
+    assert(view == b.toString)
+  }
+
+  test("3x3 complete board") {
+    val view = "+---+---+---+\n" +
+               "|   |   |   |\n" +
+               "+---+---+---+\n" +
+               "|   |   |   |\n" +
+               "+---+---+---+\n" +
+               "|   |   |   |\n" +
+               "+---+---+---+\n"
+
+    val b = Board(view)
+    assert(view == b.toString)
+  }
+
+  test("3x3 board with random plays") {
+    val view =
+      "+   +---+---+\n" +
+      "|       |   |\n" +
+      "+---+---+---+\n" +
+      "|   |   |   |\n" +
+      "+---+   +---+\n" +
+      "    |        \n" +
+      "+---+   +   +\n"
+
+    val b = Board(view)
+    assert(view == b.toString)
+  }
 }

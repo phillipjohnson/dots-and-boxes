@@ -9,7 +9,7 @@ object DotsAndBoxesApp extends App {
   val strategy1 = new Minimax()
   val strategy2 = new RandomPlay()
   val start = System.nanoTime()
-  new Tournament(10, strategy1, strategy2).play()
+  new Tournament(1, strategy1, strategy2).play()
   val end = System.nanoTime()
   println("Total time: " + (end - start) / 1000000000.0f)
 }
