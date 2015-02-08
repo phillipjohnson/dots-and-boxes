@@ -1,5 +1,5 @@
 package game
-import strategy.{MinimaxNaive, Minimax, RandomPlay}
+import strategy._
 /**
  * Author: Phillip Johnson
  * Date: 1/14/15
@@ -7,9 +7,9 @@ import strategy.{MinimaxNaive, Minimax, RandomPlay}
 object DotsAndBoxesApp extends App {
 
   val strategy1 = new Minimax()
-  val strategy2 = new RandomPlay()
+  val strategy2 = new GreedyBoxMaker()
   val start = System.nanoTime()
-  new Tournament(1, strategy1, strategy2).play()
+  new Tournament(100, strategy1, strategy2).play()
   val end = System.nanoTime()
   println("Total time: " + (end - start) / 1000000000.0f)
 }

@@ -20,6 +20,8 @@ class Game(val strategy1:Strategy, val strategy2:Strategy) {
 
   @tailrec
   private def gameLoop(state:GameState):GameState = {
+//    println(state.board)
+//    println()
     if(state.isTerminal) return state
     val move = state.currentPlayer.pickPlay(state)
     val newState = state.makeMove(move)
